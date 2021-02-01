@@ -1,0 +1,28 @@
+{{ define "main" }}
+<div class="home">
+ 
+  
+    <div class="row pack">
+
+        {{ $paginator := .Paginate (where .Site.RegularPages "Section" "posts") }}
+        {{ range $paginator.Pages }}   
+            <div class="col-md-4 card">
+             <a href="{{ .Permalink }}" class="index-anchor">    
+                <div class="panel panel-default">  
+                 <img width="100%" src="{{ .Params.image }}" alt="{{ .Title }}">
+        
+                  <div class="panel-body">
+                    <h3 class="panel-title pull-left">{{ .Title | truncate 25 }}</h3><span class="post-meta pull-right"><small>{{ .Date.Format "January 2, 2006" }}</small></span>
+                  </div>
+                </div>
+                </a>
+            </div>
+        
+            {{ end }}
+            
+            {{ partial "pagination.html" . }}
+    </div> 
+
+</div>
+
+{{ end }}

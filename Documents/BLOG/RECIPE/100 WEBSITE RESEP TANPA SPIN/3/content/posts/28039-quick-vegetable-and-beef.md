@@ -1,0 +1,24 @@
+---
+source: www.cookbooks.com/Recipe-Details.aspx?id=1017552
+title: Quick Vegetable And Beef
+image: https://1.bp.blogspot.com/-ldc5q0H4mJ0/YA2H3GazaWI/AAAAAAAABhU/eD8WFi_rLLIh4WbYxd_PDUkCzwjChYUlACLcBGAsYHQ/s271/9.png
+
+yield: 1
+ratingValue: 4.1
+calories: 271 calories
+reviewCount: 390
+cookTime: PT2H
+prepTime: PT25M
+ingredients:
+- "1 Tbsp. vegetable oil"
+- "1 c. broccoli florets"
+- "1 can 19 oz. Campbells chunky old fashioned vegetable beef soup"
+- "2 Tbsp. Frenchs Worcestershire sauce"
+- "1 bag Success rice, cooked"
+directions:
+- "In saucepan over medium heat, heat oil."
+- "Add broccoli and cook until tender-crisp."
+- "Add soup, Worcestershire sauce and rice. Heat through."
+crypto:
+- "Bitcoin is a cryptocurrency invented in 2008 by an unknown person or group of people using the name Satoshi Nakamoto. The currency began use in 2009 when its implementation was released as open-source software. Bitcoin is a decentralized digital currency, without a central bank or single administrator that can be sent from user to user on the peer-to-peer bitcoin network without the need for intermediaries. Transactions are verified by network nodes through cryptography and recorded in a public distributed ledger called a blockchain. Bitcoins are created as a reward for a process known as mining. They can be exchanged for other currencies, products, and services. Research produced by the University of Cambridge estimated that in 2017, there were 2.9 to 5.8 million unique users using a cryptocurrency wallet, most of them using bitcoin."
+---

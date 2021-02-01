@@ -1,0 +1,5 @@
+baseurl = "https://baksoenak.vercel.app/"
+languageCode = "en-us"
+title = "Meatball Enak"
+theme = "hugo-cards"
+paginate = 9
