@@ -7,7 +7,7 @@ if available, libssl will be used instead, otherwise
 the Python implementation will be used.
 """
 import os
-import pyaes
+from . import pyaes
 import logging
 from . import libssl
 

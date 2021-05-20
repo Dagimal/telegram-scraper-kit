@@ -36,7 +36,7 @@ client = TelegramClient(phone, api_id, api_hash)
 client.connect()
 if not client.is_user_authorized():
     client.send_code_request(phone)
-    client.sign_in(phone, input('Enter the code: '))
+    client.sign_in(phone, input('Masukkan Kode: '))
 
 input_file = sys.argv[1]
 users = []
@@ -72,25 +72,25 @@ for chat in chats:
     except:
         continue
 
-print('Choose a group to add members:')
+print('Pilih group yang ingin di tambahkan member:')
 i=0
 for group in groups:
     print(str(i) + '- ' + group.title)
     i+=1
 
-g_index = input("Enter a Number: ")
+g_index = input("Masukkan nomor: ")
 target_group=groups[int(g_index)]
 
 target_group_entity = InputPeerChannel(target_group.id,target_group.access_hash)
 
-mode = int(input("Enter 1 to add by username or 2 to add by ID: "))
+mode = int(input("Masukkan [1] untuk menambahkan dari username atau [2] untuk menambahkan dari ID: "))
 
 n = 0
 
 for user in users:
     n += 1
     if n % 50 == 0:
-    sleep(900)
+        sleep(900)
     try:
         print ("Adding {}".format(user['id']))
         if mode == 1:
@@ -100,14 +100,14 @@ for user in users:
         elif mode == 2:
             user_to_add = InputPeerUser(user['id'], user['access_hash'])
         else:
-            sys.exit("Invalid Mode Selected. Please Try Again.")
+            sys.exit("Mode Tidak Valid. Coba Lagi.")
         client(InviteToChannelRequest(target_group_entity,[user_to_add]))
         print("Waiting for 60-180 Seconds...")
         time.sleep(random.randrange(60, 180))
     except PeerFloodError:
         print("Getting Flood Error from telegram. Script is stopping now. Please try again after some time.")
     except UserPrivacyRestrictedError:
-        print("The user's privacy settings do not allow you to do this. Skipping.")
+        print("Setting privasi user tidak memperbolehkan anda melakukan ini. Melewati.")
         print(user, file=saveFile)
         break
     except:
