@@ -1,5 +1,5 @@
 """
-Telegram Marketing Kit v0.2
+Telegram Marketing Kit v0.2 [Control Panel]
 ==========================
 Author   : Dagimal
 E-mail   : daffagifariakmal@gmail.com
@@ -25,9 +25,9 @@ print(
 """
 )
 def teleScraper():
-	import core.scraper
+	import scraper
 def teleAdder():
-	import core.adder
+	import adder
 def mainMenu():
 	print("[1] TELEGRAM SCRAPER :sun_with_face:")
 	print("[2] TELEGRAM ADDER :coffee:")

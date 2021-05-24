@@ -1,11 +1,34 @@
-from telethon.sync import TelegramClient
-from telethon.tl.functions.messages import GetDialogsRequest
-from telethon.tl.types import InputPeerEmpty
+"""
+Telegram Group Scraper v0.2
+==========================
+Author   : Dagimal
+E-mail   : daffagifariakmal@gmail.com
+Date     : 26-April-2021
+Platform : POSIX, Windows
+--------------------------
+Project ini adalah fork dari original author https://python.gotrained.com/author/majid-alizadeh/
+dengan menambah beberapa fitur di dalamnya
+
+This Version[0.2] -----> ConfigParser
+     |
+     | COMING SOON ...
+     |
+     v
+Next Version[0.3] -----> Auto Change API via CSV
+"""
+
+from configparser import ConfigParser
+from core.telethon.sync import TelegramClient
+from core.telethon.tl.functions.messages import GetDialogsRequest
+from core.telethon.tl.types import InputPeerEmpty
 import csv
 
-api_id = 123456
-api_hash = 'YOUR_API_HASH'
-phone = '+111111111111'
+parser = ConfigParser()
+parser.read('config.conf')
+
+api_id = parser.get('api_id', 'api-id')
+api_hash = parser.get('api_hash', 'api-hash')
+phone = parser.get('phone_number', 'phone')
 client = TelegramClient(phone, api_id, api_hash)
 
 client.connect()
@@ -35,21 +58,21 @@ for chat in chats:
     except:
         continue
 
-print('Choose a group to scrape members from:')
+print('Pilih group yang akan di scrape:')
 i=0
 for g in groups:
     print(str(i) + '- ' + g.title)
     i+=1
 
-g_index = input("Enter a Number: ")
+g_index = input("Masukkan Nomor: ")
 target_group=groups[int(g_index)]
 
 print('Fetching Members...')
 all_participants = []
 all_participants = client.get_participants(target_group, aggressive=True)
 
-print('Saving In file...')
-with open("members.csv","w",encoding='UTF-8') as f:
+print('Menyimpan Ke Dalam File...')
+with open("../output/members.csv","w",encoding='UTF-8') as f:
     writer = csv.writer(f,delimiter=",",lineterminator="\n")
     writer.writerow(['username','user id', 'access hash','name','group', 'group id'])
     for user in all_participants:
@@ -67,4 +90,4 @@ with open("members.csv","w",encoding='UTF-8') as f:
             last_name= ""
         name= (first_name + ' ' + last_name).strip()
         writer.writerow([username,user.id,user.access_hash,name,target_group.title, target_group.id])      
-print('Members scraped successfully.')
+print('Member Berhasil Di Scrape...')

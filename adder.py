@@ -1,5 +1,5 @@
 """
-Telegram Adder Group v0.2
+Telegram Group Adder v0.2
 ==========================
 Author   : Dagimal
 E-mail   : daffagifariakmal@gmail.com
@@ -8,29 +8,36 @@ Platform : POSIX, Windows
 --------------------------
 Project ini adalah fork dari original author https://python.gotrained.com/author/majid-alizadeh/
 dengan menambah beberapa fitur di dalamnya
+
+This Version[0.2] -----> ConfigParser
+     |
+     | COMING SOON ...
+     |
+     v
+Next Version[0.3] -----> Auto Change API via CSV
 """
 
-from telethon.sync import TelegramClient
-from telethon.tl.functions.messages import GetDialogsRequest
-from telethon.tl.types import InputPeerEmpty, InputPeerChannel, InputPeerUser
-from telethon.errors.rpcerrorlist import PeerFloodError, UserPrivacyRestrictedError
-from telethon.tl.functions.channels import InviteToChannelRequest
 from configparser import ConfigParser
+from core.telethon.sync import TelegramClient
+from core.telethon.tl.functions.messages import GetDialogsRequest
+from core.telethon.tl.types import InputPeerEmpty, InputPeerChannel, InputPeerUser
+from core.telethon.errors.rpcerrorlist import PeerFloodError, UserPrivacyRestrictedError
+from core.telethon.tl.functions.channels import InviteToChannelRequest
 import sys
 import csv
 import traceback
 import time
 import random
 
-parser = ConfigParser.read()
+#last_add = open(".checkpoint","r").read()
+#saveFile = open(".checkpoint","w")
 
-last_add = open(".checkpoint","r").read()
-saveFile = open(".checkpoint","w")
+parser = ConfigParser()
+parser.read('config.conf')
 
-
-api_id = 123456
-api_hash = 'YOUR_API_HASH'
-phone = '+111111111111'
+api_id = parser.get('api_id', 'api-id')
+api_hash = parser.get('api_hash', 'api-hash')
+phone = parser.get('phone_number', 'phone')
 client = TelegramClient(phone, api_id, api_hash)
 
 client.connect()
@@ -38,7 +45,7 @@ if not client.is_user_authorized():
     client.send_code_request(phone)
     client.sign_in(phone, input('Masukkan Kode: '))
 
-input_file = sys.argv[1]
+input_file = '../output/members.csv'
 users = []
 with open(input_file, encoding='UTF-8') as f:
     rows = csv.reader(f,delimiter=",",lineterminator="\n")
@@ -89,7 +96,7 @@ n = 0
 
 for user in users:
     n += 1
-    if n % 50 == 0:
+    if n % 50 == 0: # Maksimal add member per hari setiap akun telegram
         sleep(900)
     try:
         print ("Adding {}".format(user['id']))
@@ -102,12 +109,12 @@ for user in users:
         else:
             sys.exit("Mode Tidak Valid. Coba Lagi.")
         client(InviteToChannelRequest(target_group_entity,[user_to_add]))
-        print("Waiting for 60-180 Seconds...")
-        time.sleep(random.randrange(60, 180))
+        print("Tunggu 5-10 Detik...")
+        time.sleep(random.randrange(5, 10))
     except PeerFloodError:
-        print("Getting Flood Error from telegram. Script is stopping now. Please try again after some time.")
+        print("Telegram Flood Error. Script berhenti sekarang. Coba lagi lain kali atau ganti nomor...")
     except UserPrivacyRestrictedError:
-        print("Setting privasi user tidak memperbolehkan anda melakukan ini. Melewati.")
+        print("Setting privasi user tidak memperbolehkan anda melakukan ini. Melewati...")
         print(user, file=saveFile)
         break
     except:
