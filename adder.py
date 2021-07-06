@@ -45,7 +45,8 @@ if not client.is_user_authorized():
     client.send_code_request(phone)
     client.sign_in(phone, input('Masukkan Kode: '))
 
-input_file = '../output/members.csv'
+fileName = sys.argv[1]
+input_file = 'output/'+fileName
 users = []
 with open(input_file, encoding='UTF-8') as f:
     rows = csv.reader(f,delimiter=",",lineterminator="\n")
@@ -115,8 +116,6 @@ for user in users:
         print("Telegram Flood Error. Script berhenti sekarang. Coba lagi lain kali atau ganti nomor...")
     except UserPrivacyRestrictedError:
         print("Setting privasi user tidak memperbolehkan anda melakukan ini. Melewati...")
-        print(user, file=saveFile)
-        break
     except:
         traceback.print_exc()
         print("Unexpected Error")

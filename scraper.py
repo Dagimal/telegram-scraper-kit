@@ -72,7 +72,7 @@ all_participants = []
 all_participants = client.get_participants(target_group, aggressive=True)
 
 print('Menyimpan Ke Dalam File...')
-with open("../output/members.csv","w",encoding='UTF-8') as f:
+with open("output/members.csv","w",encoding='UTF-8') as f:
     writer = csv.writer(f,delimiter=",",lineterminator="\n")
     writer.writerow(['username','user id', 'access hash','name','group', 'group id'])
     for user in all_participants:
