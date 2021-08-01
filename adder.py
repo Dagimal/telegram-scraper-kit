@@ -1,5 +1,5 @@
 """
-Telegram Group Adder v0.2
+Telegram Group Adder v0.3
 ==========================
 Author   : Dagimal
 E-mail   : daffagifariakmal@gmail.com
@@ -9,12 +9,15 @@ Platform : POSIX, Windows
 Project ini adalah fork dari original author https://python.gotrained.com/author/majid-alizadeh/
 dengan menambah beberapa fitur di dalamnya
 
-This Version[0.2] -----> ConfigParser
+This Version[0.3] -----> Auto Change API via CSV
+                         Auto Save, automatic continue ...
+                         Compile to exe
+                         Remove main menu for performance [DONE]
      |
      | COMING SOON ...
      |
      v
-Next Version[0.3] -----> Auto Change API via CSV
+Next Version[0.4] ---> Coming Soon ...
 """
 
 from configparser import ConfigParser
@@ -28,6 +31,22 @@ import csv
 import traceback
 import time
 import random
+import os
+
+
+print(
+"""
+ _____     _      _    _ _   
+/__   \___| | ___| | _(_) |_ 
+  / /\/ _ \ |/ _ \ |/ / | __|
+ / / |  __/ |  __/   <| | |_ 
+ \/   \___|_|\___|_|\_\_|\__|
+ Telegram Marketing Kit v0.3
+     Created By Dagimal
+
+   ++ TELEGRAM ADDER ++
+"""
+)
 
 #last_add = open(".checkpoint","r").read()
 #saveFile = open(".checkpoint","w")
@@ -45,8 +64,30 @@ if not client.is_user_authorized():
     client.send_code_request(phone)
     client.sign_in(phone, input('Masukkan Kode: '))
 
-fileName = sys.argv[1]
-input_file = 'output/'+fileName
+print('Daftar Grup Yang Sudah Anda Scrape: ')
+dirList = os.listdir('output')
+i=0
+for direktori in dirList:
+    print(str(i) + '- ' + direktori)
+    i+=1
+
+print('Pilih Hasil Scrape: (Cukup Masukkan Nomor)')
+dirIndex = input('>> ')
+
+lastMember = open('output/'+dirList[int(dirIndex)]+'/.lastmember').read() # Check Last Member
+print('Member Terakhir Yang Anda Tambahkan Adalah '+str(lastMember)+', Ada '+str(len(dirList[int(dirIndex)]))+' File CSV')
+print('--------------------')
+print('[1] Add Last Member')
+print('[2] Custom')
+memberChoice = input('>> ')
+
+if memberChoice == '1':
+    input_file = 'output/'+dirList[int(dirIndex)]+'/.lastmember'
+elif memberChoice == '2':
+    input_file = input('Cukup Masukkan Nomor: ')
+else:
+    print('inputan salah!')
+
 users = []
 with open(input_file, encoding='UTF-8') as f:
     rows = csv.reader(f,delimiter=",",lineterminator="\n")
@@ -80,7 +121,7 @@ for chat in chats:
     except:
         continue
 
-print('Pilih group yang ingin di tambahkan member:')
+print('Pilih group tujuan: ')
 i=0
 for group in groups:
     print(str(i) + '- ' + group.title)
@@ -98,7 +139,7 @@ n = 0
 for user in users:
     n += 1
     if n % 50 == 0: # Maksimal add member per hari setiap akun telegram
-        sleep(900)
+        time.sleep(900)
     try:
         print ("Adding {}".format(user['id']))
         if mode == 1:
