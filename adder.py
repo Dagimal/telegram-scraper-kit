@@ -18,6 +18,8 @@ This Version[0.3] -----> Auto Change API via CSV
      |
      v
 Next Version[0.4] ---> Coming Soon ...
+                       Auto Ganti Nomor Setiap Flood
+                       Ganti Conf Dalam Bentuk CSV
 """
 
 from configparser import ConfigParser
@@ -32,7 +34,6 @@ import traceback
 import time
 import random
 import os
-
 
 print(
 """
