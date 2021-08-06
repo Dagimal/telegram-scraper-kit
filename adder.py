@@ -11,7 +11,6 @@ dengan menambah beberapa fitur di dalamnya
 
 This Version[0.3] -----> Auto Change API via CSV
                          Auto Save, automatic continue ...
-                         Compile to exe
                          Remove main menu for performance [DONE]
      |
      | COMING SOON ...
@@ -20,6 +19,7 @@ This Version[0.3] -----> Auto Change API via CSV
 Next Version[0.4] ---> Coming Soon ...
                        Auto Ganti Nomor Setiap Flood
                        Ganti Conf Dalam Bentuk CSV
+		       Compile To Exe
 """
 
 from configparser import ConfigParser
@@ -83,11 +83,21 @@ print('[2] Custom')
 memberChoice = input('>> ')
 
 if memberChoice == '1':
-    input_file = 'output/'+dirList[int(dirIndex)]+'/.lastmember'
+	direktori = 'output/'+dirList[int(dirIndex)]
+	if lastMember == '0':
+		input_file = direktori+'/members.csv'
+	else:
+		input_file = 'output/'+dirList[int(dirIndex)]+'/members'+lastMember+'.csv'
 elif memberChoice == '2':
-    input_file = input('Cukup Masukkan Nomor: ')
+	memberList = os.listdir('output/'+dirList[int(dirIndex)])
+	i=0
+	for daftarMember in memberList:
+		print(str(i) + '- ' + daftarMember)
+		i+=1
+	pilihMember = input('Cukup Masukkan Nomor : ')
+	input_file = 'output/'+dirList[int(dirIndex)]+'/'+memberList[int(pilihMember)]
 else:
-    print('inputan salah!')
+	print('inputan salah!')
 
 users = []
 with open(input_file, encoding='UTF-8') as f:
