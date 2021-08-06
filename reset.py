@@ -28,5 +28,5 @@ elif question == '2':
         print(str(i) + '- ' + direktori)
         i+=1
     g_index = input("Masukkan nomor: ")
-    target_group=groups[int(g_index)]
+    target_group=dirList[int(g_index)]
     replaceCustom(target_group)
